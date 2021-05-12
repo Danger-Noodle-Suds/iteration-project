@@ -92,7 +92,7 @@ app.get('*', (req, res) => {
 app.use((err, req, res, next) => {
   const defaultErr = {
     status: 500,
-    log: 'Problem in some middleware.',
+    log: `Problem in some middleware. ${err.message}`,
     message: 'Serverside problem.',
   };
   const errObject = Object.assign(defaultErr, err);
