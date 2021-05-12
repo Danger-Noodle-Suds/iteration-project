@@ -1,5 +1,5 @@
 import React from "react";
-import Signup from "../components/Signup";
+import Signup from "../components/SignupPage";
 import Login from "../components/Login";
 
 function AuthContainer({
