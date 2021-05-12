@@ -39,8 +39,9 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 app.post(
   '/login',
   userController.verifyUser,
-  userController.getMoodHistory,
-  userController.updateLastLoginDate,
+  // !userController.getMoodHistory,
+  // !userController.updateLastLoginDate,
+  // !userController.getJournalHistory
   (request, response) => {
     const responseObject = {
       userVerified: true,
@@ -49,8 +50,9 @@ app.post(
       addiction: response.locals.user[0].addiction,
       emergencyContactName: response.locals.user[0].emergencycontactname,
       emergencyContactPhone: response.locals.user[0].emergencycontactphone,
-      lastLoginDate: response.locals.user[0].lastlogindate,
-      moodHistory: response.locals.userMoodHistory,
+      //!lastLoginDate: response.locals.user[0].lastlogindate,
+      //!moodHistory: response.locals.userMoodHistory,
+      //!journal
     };
     return response.status(200).json(responseObject);
   }
@@ -65,14 +67,23 @@ app.post('/signup', userController.createUser, (request, response) => {
 app.post(
   '/user',
   userController.getUserID,
-  userController.saveMood,
-  userController.getMoodHistory,
+  // !userController.saveMood,
+  // !userController.getMoodHistory,
+  
   (request, response) => {
     return response
       .status(200)
-      .json({ moodHistory: response.locals.userMoodHistory });
+      .json({});
+        //! moodHistory: response.locals.userMoodHistory 
   }
 );
+
+app.post(
+  '/user/journal',
+  // !userController.saveJournal,
+  // !userController.getJournalHistory
+
+)
 
 app.get('*', (request, response) => {
   response.status(404).send('Nothing here');
