@@ -3,9 +3,9 @@ import React, { useState } from "react";
 function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) {
   const [mood, setMood] = useState(() => "");
   const [todayMood, setTodayMood] = useState(() => false);
-  const [journal, setJournal] = useState("")
+  const [entry, setJournal] = useState("")
 
-  function sendJournal(entry) {
+  function sendJournal() {
     
       fetch("/user/journal", {
         method: "POST",

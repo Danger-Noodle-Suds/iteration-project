@@ -41,10 +41,9 @@ function Login({
         setAddiction(data.addiction);
         setFirstName(data.firstName);
         // make functionality for missed login they will send last login date
-        // ! setMissedLogin(getDateDiff(new Date(data.lastLoginDate), new Date()));
+        //!setMissedLogin(getDateDiff(new Date(data.lastLoginDate), new Date()));
         setIsLoggedIn(true);
-        // ! setMoodHistory(data.moodHistory);
-        // ! setJournalHistory(data.journalHistory)
+        //!setMoodHistory(data.moodHistory);
         history.push("/user");
       })
       .catch((e) => console.log(e));
