@@ -42,7 +42,7 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 app.post(
   '/login',
   userController.verifyUser,
-  // historyController.getMoodHistory,
+  historyController.getMoodHistory,
   historyController.updateLastLoginDate,
   (request, response) => {
     const responseObject = {
@@ -53,7 +53,7 @@ app.post(
       emergencyContactName: response.locals.user[0].emergencycontactname,
       emergencyContactPhone: response.locals.user[0].emergencycontactphone,
       lastLoginDate: response.locals.user[0].lastlogindate,
-      // moodHistory: response.locals.userMoodHistory,
+      moodHistory: response.locals.userMoodHistory,
     };
     return response.status(200).json(responseObject);
   }
