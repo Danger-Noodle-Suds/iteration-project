@@ -1,43 +1,49 @@
-const express = require('express');
-const path = require('path');
-const keys = require('./api_keys');
-const twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
+const express = require("express");
+const path = require("path");
+const keys = require("../api_keys");
+const twilio = require("twilio")(keys.twilioAccountSid, keys.twilioAuthToken);
+const db = require("./models/userModels");
+const userController = require("./controllers/userController");
+const historyController = require("./controllers/historyController");
 
 const app = express();
 
-const userController = require('./controllers/userController');
-
-app.use(express.static('../client/assets'));
+// static asset service and json parsing
+app.use(express.static("../client/assets"));
 app.use(express.json());
 
 // once we have DB figured out we can query the DB every minute.
 setInterval(() => {
-  console.log('set interval is working per minute');
+  console.log("set interval is working per minute");
 }, 60 * 1000);
 
 // twilio.messages
 //   .create({
 //     body: 'Roland reported they were feeling down. Reach out!',
 //     messagingServiceSid: 'MG7fb60d87d0007c008da8c8476ed45d95',
-//     to: '+19088388678',
+//     to: '+19088388678',s
 //   })
 //   .then((message) => console.log(message.sid))
 //   .done();
 
-// app.get("/", (request, response) => {
-//   response.status(200).sendFile(path.join(__dirname, "../index.html"));
+// app.get('/', (req, res) => {
+//   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 // });
-const uriArr = ['/login', '/signup', 'user', '/'];
+
+const uriArr = ["/login", "/signup", "user", "/"];
 uriArr.map((e) =>
   app.get(e, (req, res) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+    return res.status(200).sendFile(path.join(__dirname, "../index.html"));
   })
 );
 
-app.use('/build', express.static(path.join(__dirname, '../build')));
+// serve from the build file
+app.use("/build", express.static(path.join(__dirname, "../build")));
 
+// logs in the user, retrieves their mood history and saves today's date as their last login
+// responds with user details
 app.post(
-  '/login',
+  "/login",
   userController.verifyUser,
   // !userController.getMoodHistory,
   // !userController.updateLastLoginDate,
@@ -45,7 +51,7 @@ app.post(
   (request, response) => {
     const responseObject = {
       userVerified: true,
-      message: 'User Found.',
+      message: "User Found.",
       firstName: response.locals.user[0].firstname,
       addiction: response.locals.user[0].addiction,
       emergencyContactName: response.locals.user[0].emergencycontactname,
@@ -54,52 +60,52 @@ app.post(
       //!moodHistory: response.locals.userMoodHistory,
       //!journal
     };
-    return response.status(200).json(responseObject);
+    return res.status(200).json(resObject);
   }
 );
 
-app.post('/signup', userController.createUser, (request, response) => {
-  return response
+// creates a new user and saves it to the database
+// ! it would be nice if this went to the main page afterwards with a verified session and new mood history
+app.post("/signup", userController.createUser, (req, res) => {
+  return res
     .status(200)
-    .json({ newUserCreated: true, message: 'New user successfully created.' });
+    .json({ newUserCreated: true, message: "New user successfully created." });
 });
 
 app.post(
-  '/user',
+  "/user",
   userController.getUserID,
   // !userController.saveMood,
   // !userController.getMoodHistory,
-  
+
   (request, response) => {
-    return response
-      .status(200)
-      .json({});
-        //! moodHistory: response.locals.userMoodHistory 
+    return response.status(200).json({});
+    //! moodHistory: response.locals.userMoodHistory
   }
 );
 
 app.post(
-  '/user/journal',
+  "/user/journal"
   // !userController.saveJournal,
   // !userController.getJournalHistory
+);
 
-)
-
-app.get('*', (request, response) => {
-  response.status(404).send('Nothing here');
+app.get("*", (request, response) => {
+  response.status(404).send("Nothing here");
 });
 
-app.use((error, request, response, next) => {
-  const defaultError = {
+// universal err handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
     status: 500,
-    log: 'Problem in some middleware.',
-    message: 'Serverside problem.',
+    log: "Problem in some middleware.",
+    message: "Serverside problem.",
   };
-  const ourError = Object.assign(defaultError, error);
+  const errObject = Object.assign(defaultErr, err);
 
-  console.log(ourError.log);
+  console.log(errObject.log);
 
-  response.status(ourError.status).send(ourError.message);
+  res.status(errObject.status).send(errObject.message);
 });
 
 app.listen(3000);
