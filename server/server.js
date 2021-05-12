@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const keys = require('../api_keys');
+const keys = require('./api_keys');
 const twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
 const db = require('./models/userModels')
 const userController = require('./controllers/userController');
