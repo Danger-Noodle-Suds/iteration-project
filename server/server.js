@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
-const keys = require('./api_keys');
+const keys = require('../api_keys');
 const twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
 
 const app = express();
 
-const userController = require('./controllers/userController');
+const userController = require("./controllers/userController");
+const historyController = require('./controllers/historyController');
 
 app.use(express.static('../client/assets'));
 app.use(express.json());
@@ -36,11 +37,13 @@ uriArr.map((e) =>
 
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
+// logs in the user, retrieves their mood history and saves today's date as their last login
+// responds with user details 
 app.post(
   '/login',
   userController.verifyUser,
-  userController.getMoodHistory,
-  userController.updateLastLoginDate,
+  historyController.getMoodHistory,
+  historyController.updateLastLoginDate,
   (request, response) => {
     const responseObject = {
       userVerified: true,
@@ -56,21 +59,25 @@ app.post(
   }
 );
 
-app.post('/signup', userController.createUser, (request, response) => {
-  return response
-    .status(200)
-    .json({ newUserCreated: true, message: 'New user successfully created.' });
-});
-
-app.post(
-  '/user',
-  userController.getUserID,
-  userController.saveMood,
-  userController.getMoodHistory,
+// creates a new user and saves it to the database
+// ! it would be nice if this went to the main page afterwards with a verified session and new mood history
+app.post("/signup", 
+  userController.createUser, 
   (request, response) => {
-    return response
-      .status(200)
-      .json({ moodHistory: response.locals.userMoodHistory });
+    return response.status(200).json({newUserCreated: true, message: "New user successfully created."});
+  }
+);
+
+// retrieves user info, saves mood input, retrieves mood history and returns it
+app.post("/user",
+  userController.getUserID,
+  historyController.saveMood,
+  historyController.getMoodHistory,
+  (req, res) => {
+    return res.status(200).json({ 
+        user: res.locals.user, 
+        moodHistory: res.locals.userMoodHistory 
+      });
   }
 );
 
@@ -78,6 +85,7 @@ app.get('*', (request, response) => {
   response.status(404).send('Nothing here');
 });
 
+// universal error handler
 app.use((error, request, response, next) => {
   const defaultError = {
     status: 500,
