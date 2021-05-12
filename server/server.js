@@ -13,9 +13,9 @@ app.use(express.static('../client/assets'));
 app.use(express.json());
 
 // once we have DB figured out we can query the DB every minute.
-setInterval(() => {
-  console.log('set interval is working per minute');
-}, 60 * 1000);
+// setInterval(() => {
+//   console.log('set interval is working per minute');
+// }, 60 * 1000);
 
 // twilio.messages
 //   .create({
