@@ -13,7 +13,7 @@ userController.verifyUser = (request, response, next) => {
   const body = request.body;
   const email = [body.email];
   const findUserQuery = `SELECT * FROM users
-    WHERE email = $1;`;
+                         WHERE email = $1;`;
   database.query(findUserQuery, email, (error, result) => {
     if (error) return next({ status: 500, message: 'Error in userController.verifyUser.' });
     if (result.rows.length === 0) {
@@ -59,7 +59,6 @@ userController.createUser = async (request, response, next) => {
 };
 
 // find a user by email
-// ! sets the mood on the request body to res.locals.thismood - why?
 // sets the user row onto res.locals.user
 userController.getUserID = (request, response, next) => {
   const body = request.body;
@@ -70,7 +69,7 @@ userController.getUserID = (request, response, next) => {
   database.query(getUserIDQuery, email, (error, result) => {
     if (error) return next({ status: 500, message: 'Error in userController.getUserID.' });
     response.locals.user = result.rows;
-    // response.locals.thismood = body.mood;
+    response.locals.thismood = body.mood;
     return next();
   });
 }

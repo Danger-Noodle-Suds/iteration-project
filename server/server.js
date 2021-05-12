@@ -1,16 +1,12 @@
 const express = require('express');
 const path = require('path');
-const keys = require('./api_keys');
+const keys = require('../api_keys');
 const twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
 
 const app = express();
 
-<<<<<<< HEAD
 const userController = require("./controllers/userController");
 const historyController = require('./controllers/historyController');
-=======
-const userController = require('./controllers/userController');
->>>>>>> dev
 
 app.use(express.static('../client/assets'));
 app.use(express.json());
@@ -47,7 +43,7 @@ app.post(
   '/login',
   userController.verifyUser,
   // historyController.getMoodHistory,
-  // historyController.updateLastLoginDate,
+  historyController.updateLastLoginDate,
   (request, response) => {
     const responseObject = {
       userVerified: true,
@@ -56,7 +52,7 @@ app.post(
       addiction: response.locals.user[0].addiction,
       emergencyContactName: response.locals.user[0].emergencycontactname,
       emergencyContactPhone: response.locals.user[0].emergencycontactphone,
-      // lastLoginDate: response.locals.user[0].lastlogindate,
+      lastLoginDate: response.locals.user[0].lastlogindate,
       // moodHistory: response.locals.userMoodHistory,
     };
     return response.status(200).json(responseObject);
@@ -75,12 +71,12 @@ app.post("/signup",
 // retrieves user info, saves mood input, retrieves mood history and returns it
 app.post("/user",
   userController.getUserID,
-  // historyController.saveMood,
-  // historyController.getMoodHistory,
+  historyController.saveMood,
+  historyController.getMoodHistory,
   (req, res) => {
     return res.status(200).json({ 
-        user: res.locals.user
-        // moodHistory: response.locals.userMoodHistory 
+        user: res.locals.user, 
+        moodHistory: res.locals.userMoodHistory 
       });
   }
 );

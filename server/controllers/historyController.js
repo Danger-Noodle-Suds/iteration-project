@@ -5,14 +5,14 @@ const database = require('../models/userModels');
 
 const historyController = {};
 
-// ! it seems that mood history should have its own table
-// gets the userId of res.locals
-// finds mood row by user_id
+// gets the _id from res.locals.user[0]
+// finds mood row (with date) by user_id 
 // sets the mood rows onto locals.userMoodHistory
+// ultimately this route returns the userMoodHistory in the response object
 historyController.getMoodHistory = (request, response, next) => {
-    const userId = [response.locals.user[0].user_id];
-    const moonHistoryQuery = `SELECT mood, date FROM "public"."moods" where user_id = $1`;
-    database.query(moonHistoryQuery, userId, (error, result) => {
+    const userId = [response.locals.user[0]._id];
+    const moodHistoryQuery = `SELECT mood, date FROM "public"."moods" where user_id = $1`;
+    database.query(moodHistoryQuery, userId, (error, result) => {
       if (error) return next({ status: 500, message: 'Error in historyController.getMoodHistory.' });
       response.locals.userMoodHistory = result.rows;
       return next();
@@ -22,10 +22,10 @@ historyController.getMoodHistory = (request, response, next) => {
 // updates the users list to set the lastLoginDate to today for the current user
 // gets the current user based on the userId in locals
 historyController.updateLastLoginDate = (request, response, next) => {    
-    const userId = [response.locals.user[0].user_id];
+    const userId = [response.locals.user[0]._id];
     const updateLastLoginDateQuery = `UPDATE users
                                       SET lastLoginDate = current_date
-                                      WHERE user_id = $1;`
+                                      WHERE _id = $1;`
     database.query(updateLastLoginDateQuery, userId, (error, result) => {
       if (error) return next({ status: 500, message: 'Error in historyController.updateLastLoginDate.' });
       return next();
@@ -33,24 +33,25 @@ historyController.updateLastLoginDate = (request, response, next) => {
 };
 
 // inserts a new value into the moods table
-// moods table seems to have two columns - mood and userid
-// ! wouldn't this need some sort of DATE column to keep them ordered? 
+// based on the current routing and middleware, this request will need an "email" 
+// and a "mood" attached to the body to function as expected
 historyController.saveMood = (request, response, next) => {
-    const moodAndUserID = [response.locals.thismood, response.locals.user[0].user_id]
-    const saveMoodQuery = `INSERT INTO moods (mood, user_id)
-                            VALUES ($1, $2);`;
-    database.query(saveMoodQuery, moodAndUserID, (error, result) => {
+    // const date = new Date().toISOString().slice(0, 10); // should be '0001-01-01' format
+    const queryParams = [response.locals.thismood, response.locals.user[0]._id]
+    const dbQuery = `INSERT INTO moods (mood, date, user_id)
+                            VALUES ($1, current_date, $2);`;
+    database.query(dbQuery, queryParams, (error, result) => {
         if (error) return next({ status: 500, message: 'Error in historyController.saveMood.' });
         return next();
     });
 };
 
+// ! not currently hooked up to anything
 // looks at the last three moods based on date 
-// ! I don't see that date is a column yet though? 
 // it tests the resulting rows to see if there were three consecutive 'unwell' days
 // it sends a response that indicates the person is not doing well
 historyController.checkMood = (request, response, next) => {
-    const thisuserID = [response.locals.user[0].user_id];
+    const thisuserID = [response.locals.user[0]._id];
     const checkMoodQuery = `SELECT mood, date FROM "public"."moods" where user_id = $1 and date > current_date - 3;`;
     database.query(checkMoodQuery, thisuserID, (error, result) => {
         console.log(result.rows);
