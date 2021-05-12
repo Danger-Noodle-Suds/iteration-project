@@ -37,11 +37,11 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "/index.html",
-    }),
-  ],
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: "/index.html",
+  //   }),
+  // ],
   devtool: "eval-source-map",
   devServer: {
     publicPath: "/build",

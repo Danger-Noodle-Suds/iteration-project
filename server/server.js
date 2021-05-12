@@ -1,10 +1,10 @@
-const express = require("express");
-const path = require("path");
-const keys = require("./api_keys");
-const twilio = require("twilio")(keys.twilioAccountSid, keys.twilioAuthToken);
-const db = require("./models/userModels");
-const userController = require("./controllers/userController");
-const historyController = require("./controllers/historyController");
+const express = require('express');
+const path = require('path');
+const keys = require('./api_keys');
+const twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
+const db = require('./models/userModels')
+const userController = require('./controllers/userController');
+const historyController = require('./controllers/historyController');
 
 const app = express();
 
