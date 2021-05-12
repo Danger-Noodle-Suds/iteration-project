@@ -16,6 +16,7 @@ function MainContainer() {
   const [addiction, setAddiction] = useState(() => "");
   const [isLoggedIn, setIsLoggedIn] = useState(() => false);
   const [moodHistory, setMoodHistory] = useState(() => []);
+  const [journalHistory, setJournalHistory] = useState(() => [])
 
   return (
     <div className="main-container">
@@ -31,6 +32,7 @@ function MainContainer() {
           addiction={addiction}
           moodHistory={moodHistory}
           isLoggedIn={isLoggedIn}
+          journalHistory={journalHistory}
         />
 
         <Switch>
@@ -49,6 +51,7 @@ function MainContainer() {
               setAddiction={setAddiction}
               setIsLoggedIn={setIsLoggedIn}
               setMoodHistory={setMoodHistory}
+              setJournalHistory={setJournalHistory}
             />
           </Route>
         </Switch>
@@ -89,6 +92,7 @@ function MainContainer() {
               addiction={addiction}
               moodHistory={moodHistory}
               setMoodHistory={setMoodHistory}
+              setJournalHistory={setJournalHistory}
               isLoggedIn={isLoggedIn}
             />
           </Route>

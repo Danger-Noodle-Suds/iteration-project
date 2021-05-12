@@ -21,6 +21,7 @@ function AuthContainer({
   addiction,
   setAddiction,
   setMoodHistory,
+  setJournalHistory,
   setIsLoggedIn,
 }) {
   const renderThis = [];
@@ -62,6 +63,7 @@ function AuthContainer({
         addiction={addiction}
         setAddiction={setAddiction}
         setMoodHistory={setMoodHistory}
+        setJournalHistory={setJournalHistory}
         setIsLoggedIn={setIsLoggedIn}
       />
     );

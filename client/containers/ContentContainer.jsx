@@ -10,6 +10,8 @@ function ContentContainer({
   addiction,
   moodHistory,
   setMoodHistory,
+  setJournalHistory,
+  set
 }) {
   return (
     <div className="content-container">
@@ -22,6 +24,7 @@ function ContentContainer({
         addiction={addiction}
         setMoodHistory={setMoodHistory}
         email={email}
+        setJournalHistory={setJournalHistory}
       />
       <Calendar moodHistory={moodHistory} />
     </div>

@@ -9,6 +9,7 @@ function NavBar({
   setMissedLogin,
   setAddiction,
   setMoodHistory,
+  setJournalHistory,
   setIsLoggedIn,
   isLoggedIn,
 }) {
@@ -20,6 +21,7 @@ function NavBar({
     setMissedLogin(0);
     setAddiction("");
     setMoodHistory([]);
+    setJournalHistory([]);
     setIsLoggedIn(false);
   }
 

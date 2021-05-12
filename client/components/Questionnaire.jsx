@@ -1,27 +1,20 @@
 import React, { useState } from "react";
 
-function Questionnaire({ addiction, setMoodHistory, email }) {
+function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) {
   const [mood, setMood] = useState(() => "");
   const [todayMood, setTodayMood] = useState(() => false);
-  const [journal, setTodayJournal] = useState("")
-  const moodvals = [];
+  const [journal, setJournal] = useState("")
 
-  function moodSetter (vals) {
-    for(i = 0; i < vals.length; i ++){
-      
-    };
-  };
-  function sendJournal() {
+  function sendJournal(entry) {
     
-      fetch("/user", {
+      fetch("/user/journal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, journal }),
+        body: JSON.stringify({ email, entry }),
       })
         .then((data) => data.json())
         .then((response) => {
-          setMoodHistory(response.journalHistory);
-          setTodayMood(true);
+          setJournalHistory(response.journalHistory);
         });
   }
 
@@ -43,52 +36,69 @@ function Questionnaire({ addiction, setMoodHistory, email }) {
 
   const questionnaire = (
     <div>
-      <span>
+      {/* <form onSubmit={}>
          <select className="c-options" name="mood" placeholder="Mood"  value={mood || ""}>
-                    <option className="c-options" value="" selected="true" disabled="disabled">How are you feeling today?</option>
-                    <option className="c-options" value="5">Excellent!</option>
-                    <option className="c-options" value="4">Pretty Good</option>
-                    <option className="c-options" value="3">Not Bad</option>
-                    <option className="c-options" value="2">Could Be Better</option>
-                    <option className="c-options" value="1">Not Doing Well</option>
+                    <option className="c-options" value="" defaultValue={true} disabled="disabled" placeholder="How are you feeling today?">How are you feeling today?</option>
+                    <option className="c-options" value={5}>Excellent!</option>
+                    <option className="c-options" value={4}>Pretty Good</option>
+                    <option className="c-options" value={3}>Not Bad</option>
+                    <option className="c-options" value={2}>Could Be Better</option>
+                    <option className="c-options" value={1}>Not Doing Well</option>
          </select>
-      </span>
-      {/* <span>
+         <input className="submitButton" type="submit" onClick={() => sendMood()}>
+        Submit
+      </input>
+      </form> */}
+      <span>
         <input
           type="radio"
           id="unwell"
-          value="unwell"
+          value={5}
           name="mood"
           onChange={(e) => setMood(e.target.value)}
         ></input>
-        <label htmlFor="unwell">Unwell</label>
+        <label htmlFor="Excellent">Excellent</label>
         <input
           type="radio"
           id="neutral"
-          value="neutral"
+          value={4}
           name="mood"
           onChange={(e) => setMood(e.target.value)}
         ></input>
-        <label htmlFor="neutral">Neutral</label>
+        <label htmlFor="Pretty Good"> Pretty Good</label>
         <input
           type="radio"
           id="great"
-          value="great"
+          value={3}
           name="mood"
           onChange={(e) => setMood(e.target.value)}
         ></input>
-        <label htmlFor="great">Great</label>
+        <label htmlFor="Not Bad">Not Bad</label>
+        <input
+          type="radio"
+          id="great"
+          value={2}
+          name="mood"
+          onChange={(e) => setMood(e.target.value)}
+        ></input>
+        <label htmlFor="Could Be Better">Could Be Better</label>
+        <input
+          type="radio"
+          id="great"
+          value={5}
+          name="mood"
+          onChange={(e) => setMood(e.target.value)}
+        ></input>
+        <label htmlFor="Not Doing Well">Not Doing Well</label>
       </span>
-      <p>Describe your day :</p>
-      <textarea rows="5" cols="30"></textarea> */}
-      <button type="submit" onClick={() => sendMood()}>
+      <button className="submitButton" type="submit" onClick={() => sendMood()}>
         Submit
       </button>
     </div>
   );
-  const journal = (
+  const journalEntry = (
     <div>
-      <textarea rows="5" cols="30" placeholder="Please Write Your Thoughts On Today" onChange={(e) => setJournal(e.target.value)}></textarea>
+      <textarea maxLength="20" rows="5" cols="30" placeholder="Please Write Your Thoughts On Today" onChange={(e) => setJournal(e.target.value)}></textarea>
       <button type="submit" onClick={() => sendJournal()}>
         Submit
       </button>
@@ -111,7 +121,7 @@ function Questionnaire({ addiction, setMoodHistory, email }) {
         (This is kept confidential)
         </p>
         {/* <p>(This is kept confidential)</p> */}
-        {journal}
+        {journalEntry}
       </div>
     </div>
   );
