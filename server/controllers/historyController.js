@@ -94,7 +94,7 @@ const historyController = {
   getJournalHistory: async (req, res, next) => {
     try{
       const userId = [res.locals.user[0]._id];
-      const journalHistoryQuery = `SELECT journal, date FROM "public"."journals" where user_id = $1`;
+      const journalHistoryQuery = `SELECT entry, date FROM "public"."journals" where user_id = $1`;
       result = db.query(journalHistoryQuery, userId)
       res.locals.userJournalHistory = result.rows;
       return next();
