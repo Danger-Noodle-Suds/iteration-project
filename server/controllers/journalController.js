@@ -24,10 +24,11 @@ journalController.saveJournal = (req, res, next) => {
                        SELECT $1, _id
                        FROM users 
                        WHERE email=$2`;
-    db.query(queryTest, queryParams, (err, results) => {
+    db.query(queryText, queryParams, (err, results) => {
         if (err) return next(err); 
         console.log(results.rows);
         return next();
     });
-
 }
+
+module.exports = journalController;
