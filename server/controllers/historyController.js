@@ -10,7 +10,7 @@ const historyController = {};
 // sets the mood rows onto locals.moodHistory
 // ultimately the route using this function returns the moodHistory in the res object
 historyController.getMoodHistory = (req, res, next) => {
-    const queryParams = [res.locals.user[0]._id];
+    const queryParams = [res.locals.user._id];
     const queryString = `SELECT mood, date FROM "public"."moods" where user_id = $1`;
     db.query(queryString, queryParams, (err, result) => {
       if (err) return next({ status: 500, message: 'Error in historyController.getMoodHistory.' });
@@ -22,7 +22,7 @@ historyController.getMoodHistory = (req, res, next) => {
 // updates the users list to set the lastLoginDate to today for the current user
 // gets the current user based on the userId in locals
 historyController.updateLastLoginDate = (req, res, next) => {    
-    const queryParams = [res.locals.user[0]._id];
+    const queryParams = [res.locals.user._id];
     const queryString = `UPDATE users
                          SET lastLoginDate = current_date
                          WHERE _id = $1;`
@@ -35,7 +35,7 @@ historyController.updateLastLoginDate = (req, res, next) => {
 // inserts a new value into the moods table
 // this req will need an "email" and a "mood" attached to the body to function
 historyController.saveMood = (req, res, next) => {
-    const queryParams = [res.locals.mood, res.locals.user[0]._id]
+    const queryParams = [res.locals.mood, res.locals.user._id]
     const dbQuery = `INSERT INTO moods (mood, date, user_id)
                      VALUES ($1, current_date, $2);`;
     db.query(dbQuery, queryParams, (error, result) => {
@@ -48,7 +48,7 @@ historyController.saveMood = (req, res, next) => {
 // tests recent mood to see if there were three consecutive 'unwell' days
 // if so, sends a res that indicates the person is not doing well
 historyController.checkMood = (req, res, next) => {
-    const queryParams = [res.locals.user[0]._id];
+    const queryParams = [res.locals.user._id];
     const queryString = `SELECT mood, date FROM "public"."moods" where user_id = $1 and date > current_date - 3;`;
     db.query(queryString, queryParams, (error, result) => {
         if (error) return next({ status: 500, message: 'Error in historyController.checkMood.' });
