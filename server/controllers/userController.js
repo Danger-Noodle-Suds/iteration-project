@@ -22,7 +22,8 @@ userController.verifyUser = (req, res, next) => {
       if (isMatched === false) {
         return res.status(400).json({ userVerified: false, message: 'Password incorrect.' });
       }
-      res.locals.user = result.rows;
+      // console.log('At verify user, result.rows ===', result.rows)
+      res.locals.user = result.rows[0];
       return next();
     });
   });

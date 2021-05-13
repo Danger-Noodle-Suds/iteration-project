@@ -1,16 +1,19 @@
 const express = require('express');
 const path = require('path');
-const keys = require('./api_keys');
+const keys = require('../api_keys');
 const twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
 const db = require('./models/userModels')
 const userController = require('./controllers/userController');
 const historyController = require('./controllers/historyController');
+const sessionController = require('./controllers/sessionController');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 // static asset service and json parsing
 app.use(express.static('../client/assets'));
 app.use(express.json());
+app.use(cookieParser());
 
 // once we have DB figured out we can query the DB every minute.
 // setInterval(() => {
@@ -45,17 +48,19 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 app.post(
   '/login',
   userController.verifyUser,
+  // ! comment out the line below
+  sessionController.startSession, 
   historyController.getMoodHistory,
   historyController.updateLastLoginDate,
   (req, res) => {
     const resObject = {
       userVerified: true,
       message: 'User Found',
-      firstName: res.locals.user[0].firstname,
-      addiction: res.locals.user[0].addiction,
-      emergencyContactName: res.locals.user[0].emergencycontactname,
-      emergencyContactPhone: res.locals.user[0].emergencycontactphone,
-      lastLoginDate: res.locals.user[0].lastlogindate,
+      firstName: res.locals.user.firstname,
+      addiction: res.locals.user.addiction,
+      emergencyContactName: res.locals.user.emergencycontactname,
+      emergencyContactPhone: res.locals.user.emergencycontactphone,
+      lastLoginDate: res.locals.user.lastlogindate,
       moodHistory: res.locals.moodHistory,
     };
     return res.status(200).json(resObject);
