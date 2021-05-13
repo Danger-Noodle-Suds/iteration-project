@@ -1,17 +1,19 @@
+
 .auth-container {
   display: flex;
   text-align: center;
   width: 25%;
   height: auto;
+  box-shadow: 10px 10px 10px;
   flex-direction: column;
   text-align: center;
   align-items: center;
   border: 1px solid black;
   border-radius: 4px;
-  background: white;
+  background: rgb(255, 249, 224);
   padding-top: 50px;
   padding-bottom: 50px;
-  margin: auto;
+  margin: 40px 38%;
 }
 
 #space {
@@ -81,7 +83,13 @@ input {
 }
 /* erik stuff dont mind*/
 h1 {
+  padding: 5px 10px;
   color: teal;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: rgb(255, 249, 224)
+  
+ 
 }
 
 .nice-dates-navigation {

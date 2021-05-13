@@ -220,8 +220,8 @@ var historyController = {
         switch (_context7.prev = _context7.next) {
           case 0:
             _context7.prev = 0;
-            queryParams = [res.locals.thisjournal, res.locals.user[0]._id];
-            dbQuery = "INSERT INTO journals (journal, date, user_id)\n                            VALUES ($1, current_date, $2);";
+            queryParams = [req.body.entry, res.locals.user[0]._id];
+            dbQuery = "INSERT INTO journals (entry, date, user_id)\n                            VALUES ($1, current_date, $2);";
             _context7.next = 5;
             return regeneratorRuntime.awrap(db.query(dbQuery, queryParams));
 

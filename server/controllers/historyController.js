@@ -110,8 +110,8 @@ const historyController = {
   saveJournal: async (req, res, next) => {
     // const date = new Date().toISOString().slice(0, 10); // should be '0001-01-01' format
     try{
-      const queryParams = [res.locals.thisjournal, res.locals.user[0]._id]
-      const dbQuery = `INSERT INTO journals (journal, date, user_id)
+      const queryParams = [req.body.entry, res.locals.user[0]._id]
+      const dbQuery = `INSERT INTO journals (entry, date, user_id)
                             VALUES ($1, current_date, $2);`;
       res.locals.save = await db.query(dbQuery, queryParams)
       return next();

@@ -29,12 +29,13 @@ function NavBar({
     <>
       <Nav>
         <NavLink to="/">
-          <h1>SUD app</h1>
+          <h1>SUD App</h1>
         </NavLink>
         <NavMenu>
           {isLoggedIn === false && <NavLink to="/">Home</NavLink>}
           {isLoggedIn === true && <NavLink to="/user">Dashboard</NavLink>}
           {isLoggedIn === false && <NavLink to="/login">Login</NavLink>}
+          {isLoggedIn === true && <NavLink to="/journal">Journal Entries</NavLink>}
         </NavMenu>
         {isLoggedIn === true && (
           <NavBtn onClick={() => logOut()}>
