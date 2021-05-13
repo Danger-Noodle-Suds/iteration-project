@@ -12,13 +12,25 @@ function ContentContainer({
   moodHistory,
   setMoodHistory,
   setJournalHistory,
-  set
 }) {
+  if(!missedLogin){
+    const loginCheck =  (
+      <p>Another consecutive day logged! Keep it up!</p>
+    )
+  } else if(missedLogin === 1){
+    const loginCheck = (
+      <p>Missed you yesterday! Glad you're back!</p>
+    )
+  } else {
+    const loginCheck = (
+      <p>It's been {missedLogin} days since you last logged. Glad You're back!</p>
+    )
+  }
   return (
     <div className="content-container">
       <div id="greeting">
         <p>Welcome back {firstName}.</p>
-        <p>It's been {missedLogin} days since you've last logged on.</p>
+        {loginCheck}
         <p>You can beat {addiction}. You've got this!</p>
       </div>
       <Questionnaire
