@@ -58,7 +58,7 @@ app.post(
       ...res.locals.user,
       userVerified: true,
       message: 'User Found',
-      moodHistory,
+      moodHistory: res.locals.moodHistory,
     };
     return res.status(200).json(resObject);
   }
