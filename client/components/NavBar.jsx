@@ -4,8 +4,8 @@ import { Nav, NavLink, NavMenu, NavBtn, NavBtnLink } from "./NavBarElements";
 function NavBar({
   setFirstName,
   setAge,
-  setEmergencyContactName,
-  setEmergencyContactPhone,
+  setContactName,
+  setContactPhone,
   setMissedLogin,
   setAddiction,
   setMoodHistory,
@@ -16,8 +16,8 @@ function NavBar({
   function logOut() {
     setFirstName("");
     setAge(0);
-    setEmergencyContactName("");
-    setEmergencyContactPhone(0);
+    setContactName("");
+    setContactPhone(0);
     setMissedLogin(0);
     setAddiction("");
     setMoodHistory([]);

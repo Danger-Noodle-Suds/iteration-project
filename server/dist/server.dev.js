@@ -4,7 +4,7 @@ var express = require('express');
 
 var path = require('path');
 
-var keys = require('..api_keys/api_keys');
+var keys = require('./api_keys');
 
 var twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
 
@@ -43,18 +43,17 @@ uriArr.map(function (e) {
 app.use("/build", express["static"](path.join(__dirname, "../build"))); // logs in the user, retrieves their mood history and saves today's date as their last login
 // responds with user details
 
-app.post("/login", userController.verifyUser, userController.getMoodHistory, userController.updateLastLoginDate, // !userController.getJournalHistory
-function (request, response) {
-  var responseObject = {
+app.post("/login", userController.verifyUser, historyController.getMoodHistory, historyController.updateLastLoginDate, historyController.getJournalHistory, function (request, response) {
+  var resObject = {
     userVerified: true,
     message: "User Found.",
     firstName: response.locals.user[0].firstname,
     addiction: response.locals.user[0].addiction,
-    emergencyContactName: response.locals.user[0].emergencycontactname,
-    emergencyContactPhone: response.locals.user[0].emergencycontactphone,
+    contactName: response.locals.user[0].contactname,
+    contactPhone: response.locals.user[0].contactphone,
     lastLoginDate: response.locals.user[0].lastlogindate,
-    moodHistory: response.locals.userMoodHistory //!journalHistory: response.locals.userJournalHistory
-
+    moodHistory: response.locals.userMoodHistory,
+    journalHistory: response.locals.userJournalHistory
   };
   return res.status(200).json(resObject);
 }); // creates a new user and saves it to the database
@@ -66,19 +65,18 @@ app.post("/signup", userController.createUser, function (req, res) {
     message: "New user successfully created."
   });
 });
-app.post("/user", userController.getUserID, userController.saveMood, userController.getMoodHistory, function (request, response) {
+app.post("/user", userController.getUser, userController.saveMood, historyController.getMoodHistory, function (request, response) {
   return response.status(200).json({});
 
   moodHistory: response.locals.userMoodHistory;
 });
-app.post("/user/journal" // !userController.saveJournal,
-// !userController.getJournalHistory
-);
+app.post("/user/journal", userController.getUser, historyController.saveJournal, historyController.getJournalHistory);
 app.get("*", function (request, response) {
   response.status(404).send("Nothing here");
 }); // universal err handler
 
 app.use(function (err, req, res, next) {
+  console.log(err);
   var defaultErr = {
     status: 500,
     log: "Problem in some middleware.",

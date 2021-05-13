@@ -47,21 +47,24 @@ userController.verifyUser = (req, res, next) => {
 // TODO does not seem to have collision handling for an already created user?
 userController.createUser = async (req, res, next) => {
   const SALT_FACTOR = 10;
+  console.log('REQ BODY', req.body)
   const hashedPassword = await bcrypt.hash(req.body.password, SALT_FACTOR);
   const queryParams = [
     req.body.firstName,
-    req.body.age,
+    req.body.lastName,
+    req.body.userNumber,
     req.body.email,
     hashedPassword,
-    req.body.addiction,
-    req.body.emergencyContactName,
-    req.body.emergencyContactPhone,
+    req.body.contactName,
+    req.body.contactNumber,
   ];
-  const queryString = `INSERT INTO users (firstName, age, email, 
-                       password, addiction, emergencyContactName, 
-                       emergencyContactPhone)
+  console.log('QUERY PARAMS',queryParams)
+  const queryString = `INSERT INTO users (firstName, lastName, userNumber, email, 
+                       password, contactname, 
+                       contactnumber)
                        VALUES ($1, $2, $3, $4, $5, $6, $7);`;
   db.query(queryString, queryParams, (err, result) => {
+    console.log(result)
     if (err) return next({ message: err.message });
     return next();
   });
@@ -70,6 +73,7 @@ userController.createUser = async (req, res, next) => {
 // find a user by email
 // sets the user row onto res.locals.user
 userController.getUser = (req, res, next) => {
+  console.log(req.body.email)
   const queryParams = [req.body.email];
   const queryString = `SELECT * FROM users
                        WHERE email = $1;`;
@@ -77,6 +81,7 @@ userController.getUser = (req, res, next) => {
     if (err)
       return next({ status: 500, message: "Error in userController.getUser." });
     res.locals.user = result.rows;
+    console.log(res.locals.user)
     res.locals.mood = req.body.mood;
     return next();
   });

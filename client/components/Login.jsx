@@ -12,9 +12,8 @@ function Login({
   setEmail,
   password,
   setPassword,
-  setEmergencyContactName,
-  setEmergencyContactPhone,
-  setAddiction,
+  setContactName,
+  setContactPhone,
   setMissedLogin,
   setMoodHistory,
   setJournalHistory,
@@ -36,9 +35,8 @@ function Login({
       .then((data) => data.json())
       .then((data) => {
         setPassword("");
-        setEmergencyContactName(data.emergencyContactName);
-        setEmergencyContactPhone(data.emergencyContactPhone);
-        setAddiction(data.addiction);
+        setContactName(data.contactName);
+        setContactPhone(data.contactPhone);
         setFirstName(data.firstName);
         // make functionality for missed login they will send last login date
         //!setMissedLogin(getDateDiff(new Date(data.lastLoginDate), new Date()));

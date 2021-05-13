@@ -10,8 +10,8 @@ function MainContainer() {
   const [age, setAge] = useState(() => 0);
   const [email, setEmail] = useState(() => "");
   const [password, setPassword] = useState(() => "");
-  const [emergencyContactName, setEmergencyContactName] = useState(() => "");
-  const [emergencyContactPhone, setEmergencyContactPhone] = useState(() => 0);
+  const [contactName, setContactName] = useState(() => "");
+  const [contactPhone, setContactPhone] = useState(() => 0);
   const [missedLogin, setMissedLogin] = useState(() => 0);
   const [addiction, setAddiction] = useState(() => "");
   const [isLoggedIn, setIsLoggedIn] = useState(() => false);
@@ -24,10 +24,10 @@ function MainContainer() {
         <NavBar
           setFirstName={setFirstName}
           age={age}
-          emergencyContactName={emergencyContactName}
-          emergencyContactPhone={emergencyContactPhone}
-          setEmergencyContactName={setEmergencyContactName}
-          setEmergencyContactPhone={setEmergencyContactPhone}
+          contactName={contactName}
+          contactPhone={contactPhone}
+          setContactName={setContactName}
+          setContactPhone={setContactPhone}
           missedLogin={missedLogin}
           addiction={addiction}
           moodHistory={moodHistory}
@@ -45,8 +45,8 @@ function MainContainer() {
               setEmail={setEmail}
               password={password}
               setPassword={setPassword}
-              setEmergencyContactName={setEmergencyContactName}
-              setEmergencyContactPhone={setEmergencyContactPhone}
+              setContactName={setContactName}
+              setContactPhone={setContactPhone}
               setMissedLogin={setMissedLogin}
               setAddiction={setAddiction}
               setIsLoggedIn={setIsLoggedIn}
@@ -67,10 +67,10 @@ function MainContainer() {
               setEmail={setEmail}
               password={password}
               setPassword={setPassword}
-              emergencyContactName={emergencyContactName}
-              emergencyContactPhone={emergencyContactPhone}
-              setEmergencyContactName={setEmergencyContactName}
-              setEmergencyContactPhone={setEmergencyContactPhone}
+              contactName={contactName}
+              contactPhone={contactPhone}
+              setContactName={setContactName}
+              setContactPhone={setContactPhone}
               missedLogin={missedLogin}
               setMissedLogin={setMissedLogin}
               addiction={addiction}
@@ -84,10 +84,10 @@ function MainContainer() {
               email={email}
               firstName={firstName}
               age={age}
-              emergencyContactName={emergencyContactName}
-              emergencyContactPhone={emergencyContactPhone}
-              setEmergencyContactName={setEmergencyContactName}
-              setEmergencyContactPhone={setEmergencyContactPhone}
+              contactName={contactName}
+              contactPhone={contactPhone}
+              setContactName={setContactName}
+              setContactPhone={setContactPhone}
               missedLogin={missedLogin}
               addiction={addiction}
               moodHistory={moodHistory}

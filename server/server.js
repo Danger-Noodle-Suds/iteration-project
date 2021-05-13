@@ -44,20 +44,20 @@ app.use("/build", express.static(path.join(__dirname, "../build")));
 app.post(
   "/login",
   userController.verifyUser,
-  userController.getMoodHistory,
-  userController.updateLastLoginDate,
-  // !userController.getJournalHistory
+  historyController.getMoodHistory,
+  historyController.updateLastLoginDate,
+  historyController.getJournalHistory,
   (request, response) => {
-    const responseObject = {
+    const resObject = {
       userVerified: true,
       message: "User Found.",
       firstName: response.locals.user[0].firstname,
       addiction: response.locals.user[0].addiction,
-      emergencyContactName: response.locals.user[0].emergencycontactname,
-      emergencyContactPhone: response.locals.user[0].emergencycontactphone,
+      contactName: response.locals.user[0].contactname,
+      contactPhone: response.locals.user[0].contactphone,
       lastLoginDate: response.locals.user[0].lastlogindate,
       moodHistory: response.locals.userMoodHistory,
-      //!journalHistory: response.locals.userJournalHistory
+      journalHistory: response.locals.userJournalHistory
     };
     return res.status(200).json(resObject);
   }
@@ -73,9 +73,9 @@ app.post("/signup", userController.createUser, (req, res) => {
 
 app.post(
   "/user",
-  userController.getUserID,
+  userController.getUser,
   userController.saveMood,
-  userController.getMoodHistory,
+  historyController.getMoodHistory,
 
   (request, response) => {
     return response.status(200).json({});
@@ -84,9 +84,10 @@ app.post(
 );
 
 app.post(
-  "/user/journal"
-  // !userController.saveJournal,
-  // !userController.getJournalHistory
+  "/user/journal",
+  userController.getUser,
+  historyController.saveJournal,
+  historyController.getJournalHistory
 );
 
 app.get("*", (request, response) => {
@@ -95,6 +96,7 @@ app.get("*", (request, response) => {
 
 // universal err handler
 app.use((err, req, res, next) => {
+  console.log(err)
   const defaultErr = {
     status: 500,
     log: "Problem in some middleware.",

@@ -98,7 +98,7 @@ function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) 
   );
   const journalEntry = (
     <div>
-      <textarea maxLength="20" rows="5" cols="30" placeholder="Please Write Your Thoughts On Today" onChange={(e) => setJournal(e.target.value)}></textarea>
+      <textarea maxLength="2000" rows="5" cols="30" placeholder="Please Write Your Thoughts On Today" onChange={(e) => setJournal(e.target.value)}></textarea>
       <button type="submit" onClick={() => sendJournal()}>
         Submit
       </button>
