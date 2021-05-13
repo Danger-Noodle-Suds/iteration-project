@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
-const keys = require('./api_keys');
+const keys = require('../api_keys');
 const twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
 const db = require('./models/userModels')
 const userController = require('./controllers/userController');
 const historyController = require('./controllers/historyController');
 const sessionController = require('./controllers/sessionController');
+const journalController = require('./controllers/journalController');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -63,6 +64,20 @@ app.post(
     return res.status(200).json(resObject);
   }
 );
+
+app.get('/journal',
+  userController.getUser,
+  journalController.getJournals,
+  (req, res) => {
+    return res.status(200).json(res.locals.journalEntries)
+  }
+);
+
+app.post('/journal',
+  journalController.saveJournal,
+  (req, res) => {
+    return res.status(200).json({message: 'journal saved!'});
+  });
 
 // creates a new user and saves it to the database
 // ! it would be nice if this went to the main page afterwards with a verified session and new mood history

@@ -61,7 +61,7 @@ userController.getUser = (req, res, next) => {
                        WHERE email = $1;`;
   db.query(queryString, queryParams, (err, result) => {
     if (err) return next({ status: 500, message: 'Error in userController.getUser.' });
-    res.locals.user = result.rows;
+    res.locals.user = result.rows[0];
     res.locals.mood = req.body.mood;
     return next();
   });
