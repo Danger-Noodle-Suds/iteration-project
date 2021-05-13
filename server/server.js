@@ -55,14 +55,9 @@ app.post(
   historyController.updateLastLoginDate,
   (req, res) => {
     const resObject = {
+      ...res.locals.user,
       userVerified: true,
       message: 'User Found',
-      firstName: res.locals.user.firstname,
-      addiction: res.locals.user.addiction,
-      emergencyContactName: res.locals.user.emergencycontactname,
-      emergencyContactPhone: res.locals.user.emergencycontactphone,
-      lastLoginDate: res.locals.user.lastlogindate,
-      moodHistory: res.locals.moodHistory,
     };
     return res.status(200).json(resObject);
   }
