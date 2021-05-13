@@ -66,6 +66,7 @@ app.post(
 );
 
 app.get('/journal',
+  userController.getUser,
   journalController.getJournals,
   (req, res) => {
     return res.status(200).json(res.locals.journalEntries)

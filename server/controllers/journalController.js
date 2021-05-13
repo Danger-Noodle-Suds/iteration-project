@@ -7,7 +7,7 @@ const journalController = {};
 
 // gets and sends all journal entries in the response as well as saving to res.locals 
 journalController.getJournals = (req, res, next) => {
-    const queryParams = [req.body._id];
+    const queryParams = [res.locals.user._id];
     const queryText = `SELECT * FROM journals WHERE user_id=$1`;
     db.query(queryText, queryParams, (err, results) => {
         if (err) return next(err);
