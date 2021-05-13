@@ -1,6 +1,7 @@
-import React from "react";
-import Calendar from "../components/Calendar";
-import Questionnaire from "../components/Questionnaire";
+import React from 'react';
+import EntryCalendar from '../components/EntryCalendar';
+import Questionnaire from '../components/Questionnaire';
+import './../styles/styles.scss';
 
 function ContentContainer({
   email,
@@ -23,7 +24,9 @@ function ContentContainer({
         setMoodHistory={setMoodHistory}
         email={email}
       />
-      <Calendar moodHistory={moodHistory} />
+      <div id="calendarDiv" style={{ width: '50vw', margin: '0 auto' }}>
+        <EntryCalendar />
+      </div>
     </div>
   );
 }

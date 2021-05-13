@@ -35,19 +35,19 @@ userController.createUser = async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(req.body.password, SALT_FACTOR);
   const queryParams = [
     req.body.firstName,
-    req.body.age,
+    req.body.lastName,
+    req.body.userNumber,
+    req.body.dob,
     req.body.email,
     hashedPassword,
-    req.body.addiction,
-    req.body.emergencyContactName,
-    req.body.emergencyContactPhone
+    req.body.contactName,
+    req.body.contactNumber,
   ];
-  const queryString = `INSERT INTO users (firstName, age, email, 
-                       password, addiction, emergencyContactName, 
-                       emergencyContactPhone)
-                       VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+  const queryString = `INSERT INTO users (firstName, lastName, userNumber, dob, email, 
+                       password, contactname, contactnumber)
+                       VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
   db.query(queryString, queryParams, (err, result) => {
-    if (err) return next({ message: err.message });
+    if (err) return next(err);
     return next();
   });
 };
