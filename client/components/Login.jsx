@@ -12,11 +12,11 @@ function Login({
   setEmail,
   password,
   setPassword,
-  setEmergencyContactName,
-  setEmergencyContactPhone,
-  setAddiction,
+  setContactName,
+  setContactPhone,
   setMissedLogin,
   setMoodHistory,
+  setJournalHistory,
   setIsLoggedIn,
 }) {
   const history = useHistory();
@@ -35,14 +35,13 @@ function Login({
       .then((data) => data.json())
       .then((data) => {
         setPassword("");
-        setEmergencyContactName(data.emergencyContactName);
-        setEmergencyContactPhone(data.emergencyContactPhone);
-        setAddiction(data.addiction);
+        setContactName(data.contactName);
+        setContactPhone(data.contactPhone);
         setFirstName(data.firstName);
         // make functionality for missed login they will send last login date
-        // ! setMissedLogin(getDateDiff(new Date(data.lastLoginDate), new Date()));
+        //!setMissedLogin(getDateDiff(new Date(data.lastLoginDate), new Date()));
         setIsLoggedIn(true);
-        // ! setMoodHistory(data.moodHistory);
+        //!setMoodHistory(data.moodHistory);
         history.push("/user");
       })
       .catch((e) => console.log(e));

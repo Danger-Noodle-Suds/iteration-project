@@ -9,13 +9,13 @@ const historyController = require('./controllers/historyController');
 const app = express();
 
 // static asset service and json parsing
-app.use(express.static('../client/assets'));
+app.use(express.static("../client/assets"));
 app.use(express.json());
 
 // once we have DB figured out we can query the DB every minute.
-// setInterval(() => {
-//   console.log('set interval is working per minute');
-// }, 60 * 1000);
+setInterval(() => {
+  console.log("set interval is working per minute");
+}, 60 * 1000);
 
 // twilio.messages
 //   .create({
@@ -29,34 +29,35 @@ app.use(express.json());
 // app.get('/', (req, res) => {
 //   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 // });
-
-const uriArr = ['/login', '/signup', 'user', '/'];
+const uriArr = ["/login", "/signup", "user", "/"];
 uriArr.map((e) =>
   app.get(e, (req, res) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+    return res.status(200).sendFile(path.join(__dirname, "../index.html"));
   })
 );
 
-// serve from the build file 
-app.use('/build', express.static(path.join(__dirname, '../build')));
+// serve from the build file
+app.use("/build", express.static(path.join(__dirname, "../build")));
 
 // logs in the user, retrieves their mood history and saves today's date as their last login
-// responds with user details 
+// responds with user details
 app.post(
-  '/login',
+  "/login",
   userController.verifyUser,
   historyController.getMoodHistory,
   historyController.updateLastLoginDate,
+  historyController.getJournalHistory,
   (req, res) => {
     const resObject = {
       userVerified: true,
-      message: 'User Found',
+      message: "User Found.",
       firstName: res.locals.user[0].firstname,
       addiction: res.locals.user[0].addiction,
-      emergencyContactName: res.locals.user[0].emergencycontactname,
-      emergencyContactPhone: res.locals.user[0].emergencycontactphone,
+      contactName: res.locals.user[0].contactname,
+      contactPhone: res.locals.user[0].contactphone,
       lastLoginDate: res.locals.user[0].lastlogindate,
-      moodHistory: res.locals.moodHistory,
+      moodHistory: res.locals.userMoodHistory,
+      journalHistory: res.locals.userJournalHistory
     };
     return res.status(200).json(resObject);
   }
@@ -64,32 +65,38 @@ app.post(
 
 // creates a new user and saves it to the database
 // ! it would be nice if this went to the main page afterwards with a verified session and new mood history
-app.post('/signup', 
-  userController.createUser, 
-  (req, res) => {
-    return res.status(200).json({newUserCreated: true, message: 'New user successfully created.'});
-  }
-);
+app.post("/signup", userController.createUser, (req, res) => {
+  return res
+    .status(200)
+    .json({ newUserCreated: true, message: "New user successfully created." });
+});
 
-// retrieves user info, saves mood input, retrieves mood history and returns it
-app.post('/user',
+app.post(
+  "/user",
   userController.getUser,
-  historyController.saveMood,
+  userController.saveMood,
   historyController.getMoodHistory,
+
   (req, res) => {
-    return res.status(200).json({ 
-        user: res.locals.user, 
-        moodHistory: res.locals.moodHistory 
-      });
+    return res.status(200).json({});
+     moodHistory: res.locals.userMoodHistory
   }
 );
 
-app.get('*', (req, res) => {
-  res.status(404).send('Nothing here');
+app.post(
+  "/user/journal",
+  userController.getUser,
+  historyController.saveJournal,
+  historyController.getJournalHistory
+);
+
+app.get("*", (req, res) => {
+  res.status(404).send("Nothing here");
 });
 
 // universal err handler
 app.use((err, req, res, next) => {
+  console.log(err)
   const defaultErr = {
     status: 500,
     log: `Problem in some middleware. ${err.message}`,
