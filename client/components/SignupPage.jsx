@@ -34,8 +34,6 @@ const Signup = (props) => {
   const history = useHistory();
   //passes signup information to the backend when 'signup' button is clicked
   const saveUser = () => {
-    console.log('hi')
-    console.log(userNumber)
     if (firstName === '' || lastName === '' || userNumber === '' || email === '' || password === '' || dob === '' || contactName === '' || contactNumber === '') {
       setInputError('Please fill out all fields');
     } else if (isNaN(contactNumber)) {
