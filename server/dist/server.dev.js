@@ -43,17 +43,17 @@ uriArr.map(function (e) {
 app.use("/build", express["static"](path.join(__dirname, "../build"))); // logs in the user, retrieves their mood history and saves today's date as their last login
 // responds with user details
 
-app.post("/login", userController.verifyUser, historyController.getMoodHistory, historyController.updateLastLoginDate, historyController.getJournalHistory, function (request, response) {
+app.post("/login", userController.verifyUser, historyController.getMoodHistory, historyController.updateLastLoginDate, historyController.getJournalHistory, function (req, res) {
   var resObject = {
     userVerified: true,
     message: "User Found.",
-    firstName: response.locals.user[0].firstname,
-    addiction: response.locals.user[0].addiction,
-    contactName: response.locals.user[0].contactname,
-    contactPhone: response.locals.user[0].contactphone,
-    lastLoginDate: response.locals.user[0].lastlogindate,
-    moodHistory: response.locals.userMoodHistory,
-    journalHistory: response.locals.userJournalHistory
+    firstName: res.locals.user[0].firstname,
+    addiction: res.locals.user[0].addiction,
+    contactName: res.locals.user[0].contactname,
+    contactPhone: res.locals.user[0].contactphone,
+    lastLoginDate: res.locals.user[0].lastlogindate,
+    moodHistory: res.locals.userMoodHistory,
+    journalHistory: res.locals.userJournalHistory
   };
   return res.status(200).json(resObject);
 }); // creates a new user and saves it to the database
@@ -65,14 +65,14 @@ app.post("/signup", userController.createUser, function (req, res) {
     message: "New user successfully created."
   });
 });
-app.post("/user", userController.getUser, userController.saveMood, historyController.getMoodHistory, function (request, response) {
-  return response.status(200).json({});
+app.post("/user", userController.getUser, userController.saveMood, historyController.getMoodHistory, function (req, res) {
+  return res.status(200).json({});
 
-  moodHistory: response.locals.userMoodHistory;
+  moodHistory: res.locals.userMoodHistory;
 });
 app.post("/user/journal", userController.getUser, historyController.saveJournal, historyController.getJournalHistory);
-app.get("*", function (request, response) {
-  response.status(404).send("Nothing here");
+app.get("*", function (req, res) {
+  res.status(404).send("Nothing here");
 }); // universal err handler
 
 app.use(function (err, req, res, next) {

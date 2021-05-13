@@ -47,17 +47,17 @@ app.post(
   historyController.getMoodHistory,
   historyController.updateLastLoginDate,
   historyController.getJournalHistory,
-  (request, response) => {
+  (req, res) => {
     const resObject = {
       userVerified: true,
       message: "User Found.",
-      firstName: response.locals.user[0].firstname,
-      addiction: response.locals.user[0].addiction,
-      contactName: response.locals.user[0].contactname,
-      contactPhone: response.locals.user[0].contactphone,
-      lastLoginDate: response.locals.user[0].lastlogindate,
-      moodHistory: response.locals.userMoodHistory,
-      journalHistory: response.locals.userJournalHistory
+      firstName: res.locals.user[0].firstname,
+      addiction: res.locals.user[0].addiction,
+      contactName: res.locals.user[0].contactname,
+      contactPhone: res.locals.user[0].contactphone,
+      lastLoginDate: res.locals.user[0].lastlogindate,
+      moodHistory: res.locals.userMoodHistory,
+      journalHistory: res.locals.userJournalHistory
     };
     return res.status(200).json(resObject);
   }
@@ -77,9 +77,9 @@ app.post(
   userController.saveMood,
   historyController.getMoodHistory,
 
-  (request, response) => {
-    return response.status(200).json({});
-     moodHistory: response.locals.userMoodHistory
+  (req, res) => {
+    return res.status(200).json({});
+     moodHistory: res.locals.userMoodHistory
   }
 );
 
@@ -90,8 +90,8 @@ app.post(
   historyController.getJournalHistory
 );
 
-app.get("*", (request, response) => {
-  response.status(404).send("Nothing here");
+app.get("*", (req, res) => {
+  res.status(404).send("Nothing here");
 });
 
 // universal err handler

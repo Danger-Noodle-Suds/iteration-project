@@ -181,41 +181,46 @@ var historyController = {
       }
     });
   },
-  getJournalHistory: function getJournalHistory(request, response, next) {
+  getJournalHistory: function getJournalHistory(req, res, next) {
     var userId, journalHistoryQuery;
     return regeneratorRuntime.async(function getJournalHistory$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            userId = [response.locals.user[0]._id];
+            _context6.prev = 0;
+            userId = [res.locals.user[0]._id];
             journalHistoryQuery = "SELECT journal, date FROM \"public\".\"journals\" where user_id = $1";
-            db.query(journalHistoryQuery, userId, function (error, result) {
-              if (error) return next({
-                status: 500,
-                message: 'Error in historyController.getJournalHistory.'
-              });
-              response.locals.userJournalHistory = result.rows;
-              return next();
-            });
+            result = db.query(journalHistoryQuery, userId);
+            res.locals.userJournalHistory = result.rows;
+            return _context6.abrupt("return", next());
 
-          case 3:
+          case 8:
+            _context6.prev = 8;
+            _context6.t0 = _context6["catch"](0);
+            console.log(_context6.t0);
+            return _context6.abrupt("return", next({
+              status: 500,
+              message: 'Error in historyController.updateLastLoginDate.'
+            }));
+
+          case 12:
           case "end":
             return _context6.stop();
         }
       }
-    });
+    }, null, null, [[0, 8]]);
   },
   // inserts a new value into the journals table
   // based on the current routing and middleware, this request will need an "email" 
   // and a "journal" attached to the body to function as expected
-  saveJournal: function saveJournal(request, response, next) {
+  saveJournal: function saveJournal(req, res, next) {
     var queryParams, dbQuery;
     return regeneratorRuntime.async(function saveJournal$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
             _context7.prev = 0;
-            queryParams = [response.locals.thisjournal, response.locals.user[0]._id];
+            queryParams = [res.locals.thisjournal, res.locals.user[0]._id];
             dbQuery = "INSERT INTO journals (journal, date, user_id)\n                            VALUES ($1, current_date, $2);";
             _context7.next = 5;
             return regeneratorRuntime.awrap(db.query(dbQuery, queryParams));

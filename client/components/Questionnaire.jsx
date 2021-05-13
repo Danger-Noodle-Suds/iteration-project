@@ -13,8 +13,8 @@ function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) 
         body: JSON.stringify({ email, entry }),
       })
         .then((data) => data.json())
-        .then((response) => {
-          setJournalHistory(response.journalHistory);
+        .then((res) => {
+          setJournalHistory(res.journalHistory);
         });
   }
 
@@ -27,8 +27,8 @@ function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) 
         body: JSON.stringify({ email, mood }),
       })
         .then((data) => data.json())
-        .then((response) => {
-          setMoodHistory(response.moodHistory);
+        .then((res) => {
+          setMoodHistory(res.moodHistory);
           setTodayMood(true);
         });
     }

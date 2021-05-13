@@ -91,27 +91,30 @@ const historyController = {
     });
   },
 
-  getJournalHistory: async (request, response, next) => {
-  const userId = [response.locals.user[0]._id];
-  const journalHistoryQuery = `SELECT journal, date FROM "public"."journals" where user_id = $1`;
-  db.query(journalHistoryQuery, userId, (error, result) => {
-    if (error) return next({ status: 500, message: 'Error in historyController.getJournalHistory.' });
-      response.locals.userJournalHistory = result.rows;
+  getJournalHistory: async (req, res, next) => {
+    try{
+      const userId = [res.locals.user[0]._id];
+      const journalHistoryQuery = `SELECT journal, date FROM "public"."journals" where user_id = $1`;
+      result = db.query(journalHistoryQuery, userId)
+      res.locals.userJournalHistory = result.rows;
       return next();
-    });
+    } catch (err) {
+      console.log(err)
+      return next({ status: 500, message: 'Error in historyController.updateLastLoginDate.' })
+    }
   },
 
 // inserts a new value into the journals table
 // based on the current routing and middleware, this request will need an "email" 
 // and a "journal" attached to the body to function as expected
-  saveJournal: async (request, response, next) => {
+  saveJournal: async (req, res, next) => {
     // const date = new Date().toISOString().slice(0, 10); // should be '0001-01-01' format
     try{
-      const queryParams = [response.locals.thisjournal, response.locals.user[0]._id]
+      const queryParams = [res.locals.thisjournal, res.locals.user[0]._id]
       const dbQuery = `INSERT INTO journals (journal, date, user_id)
                             VALUES ($1, current_date, $2);`;
       res.locals.save = await db.query(dbQuery, queryParams)
-        return next();
+      return next();
     } catch (err) {
       console.log(err)
       return next({ status: 500, message: 'Error in historyController.updateLastLoginDate.' })
