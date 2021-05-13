@@ -6,7 +6,7 @@ const db = require('./models/userModels')
 const userController = require('./controllers/userController');
 const historyController = require('./controllers/historyController');
 const sessionController = require('./controllers/sessionController');
-const journalController = require('./controllers/journalController')
+const journalController = require('./controllers/journalController');
 const cookieParser = require('cookie-parser');
 
 const app = express();
