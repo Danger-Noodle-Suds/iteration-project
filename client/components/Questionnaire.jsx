@@ -6,7 +6,6 @@ function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) 
   const [entry, setJournal] = useState("")
 
   function sendJournal() {
-    
       fetch("/user/journal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -14,6 +13,7 @@ function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) 
       })
         .then((data) => data.json())
         .then((res) => {
+          setJournal("");
           setJournalHistory(res.journalHistory);
         });
   }
@@ -28,6 +28,7 @@ function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) 
       })
         .then((data) => data.json())
         .then((res) => {
+          setMood("")
           setMoodHistory(res.moodHistory);
           setTodayMood(true);
         });
