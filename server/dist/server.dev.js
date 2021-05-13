@@ -4,7 +4,7 @@ var express = require('express');
 
 var path = require('path');
 
-var keys = require('./api_keys');
+var keys = require('..api_keys/api_keys');
 
 var twilio = require('twilio')(keys.twilioAccountSid, keys.twilioAuthToken);
 
