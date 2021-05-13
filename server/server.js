@@ -65,20 +65,6 @@ app.post(
   }
 );
 
-app.get('/journal',
-  userController.getUser,
-  journalController.getJournals,
-  (req, res) => {
-    return res.status(200).json(res.locals.journalEntries)
-  }
-);
-
-app.post('/journal',
-  journalController.saveJournal,
-  (req, res) => {
-    return res.status(200).json({message: 'journal saved!'});
-  });
-
 // creates a new user and saves it to the database
 // ! it would be nice if this went to the main page afterwards with a verified session and new mood history
 app.post('/signup', 

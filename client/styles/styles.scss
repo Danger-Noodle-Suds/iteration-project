@@ -1,17 +1,19 @@
+
 .auth-container {
   display: flex;
   text-align: center;
   width: 25%;
   height: auto;
+  box-shadow: 10px 10px 10px;
   flex-direction: column;
   text-align: center;
   align-items: center;
   border: 1px solid black;
   border-radius: 4px;
-  background: white;
+  background: rgb(255, 249, 224);
   padding-top: 50px;
   padding-bottom: 50px;
-  margin: auto;
+  margin: 40px 38%;
 }
 
 #space {
@@ -26,23 +28,95 @@
 input {
   margin: 3px;
 }
-
-.questionnaire {
-  display: grid;
+.entryCard{
+  box-shadow: 10px 10px 10px;
   text-align: center;
-  width: 25%;
+  width: 50%;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: rgb(255, 249, 224);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: auto;
+}
+.entries {
+  box-shadow: 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 90%;
   height: auto;
   border: 1px solid black;
   border-radius: 4px;
   background: white;
   padding-top: 50px;
   padding-bottom: 50px;
+  margin-top: 30px;
+  margin-left: 50px;
+}
+.entryContainer {
+  box-shadow: 10px 10px 10px;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  width: 90%;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: white;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-top: 30px;
+  margin-left: 50px;
+}
+.questionnaire {
+  box-shadow: 10px 10px 10px;
+  text-align: center;
+  width: 25%;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: rgb(255, 249, 224);
+  padding-top: 50px;
+  padding-bottom: 50px;
   margin: auto;
 }
-
+.journal {
+  box-shadow: 10px 10px 10px;
+  text-align: center;
+  width: 25%;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: rgb(255, 249, 224);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: auto;
+}
+.greeting {
+  box-shadow: 10px 10px 10px;
+  text-align: center;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 1px#333;
+  width: 50%;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: rgb(255, 249, 224);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: auto;
+}
 /* erik stuff dont mind*/
 h1 {
+  padding: 5px 10px;
   color: teal;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: rgb(255, 249, 224)
+  
+ 
 }
 
 .nice-dates-navigation {

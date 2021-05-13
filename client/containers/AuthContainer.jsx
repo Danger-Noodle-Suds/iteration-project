@@ -12,15 +12,16 @@ function AuthContainer({
   setEmail,
   password,
   setPassword,
-  emergencyContactName,
-  emergencyContactPhone,
-  setEmergencyContactName,
-  setEmergencyContactPhone,
+  contactName,
+  contactPhone,
+  setContactName,
+  setContactPhone,
   missedLogin,
   setMissedLogin,
   addiction,
   setAddiction,
   setMoodHistory,
+  setJournalHistory,
   setIsLoggedIn,
 }) {
   const renderThis = [];
@@ -36,10 +37,10 @@ function AuthContainer({
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
-        emergencyContactName={emergencyContactName}
-        emergencyContactPhone={emergencyContactPhone}
-        setEmergencyContactName={setEmergencyContactName}
-        setEmergencyContactPhone={setEmergencyContactPhone}
+        contactName={contactName}
+        contactPhone={contactPhone}
+        setContactName={setContactName}
+        setContactPhone={setContactPhone}
         missedLogin={missedLogin}
         setMissedLogin={setMissedLogin}
         addiction={addiction}
@@ -56,12 +57,13 @@ function AuthContainer({
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
-        setEmergencyContactName={setEmergencyContactName}
-        setEmergencyContactPhone={setEmergencyContactPhone}
+        setContactName={setContactName}
+        setContactPhone={setContactPhone}
         setMissedLogin={setMissedLogin}
         addiction={addiction}
         setAddiction={setAddiction}
         setMoodHistory={setMoodHistory}
+        setJournalHistory={setJournalHistory}
         setIsLoggedIn={setIsLoggedIn}
       />
     );
