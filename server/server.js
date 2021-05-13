@@ -49,6 +49,7 @@ app.post(
   '/login',
   userController.verifyUser,
   // ! comment out the line below
+  sessionController.deleteSession,
   sessionController.startSession, 
   historyController.getMoodHistory,
   historyController.updateLastLoginDate,
@@ -78,6 +79,7 @@ app.post('/signup',
 
 // retrieves user info, saves mood input, retrieves mood history and returns it
 app.post('/user',
+  sessionController.verifySession,
   userController.getUser,
   historyController.saveMood,
   historyController.getMoodHistory,
