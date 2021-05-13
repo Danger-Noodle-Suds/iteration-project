@@ -6,7 +6,7 @@ function Questionnaire({ addiction, setMoodHistory, setJournalHistory, email }) 
   const [entry, setJournal] = useState("")
 
   function sendJournal() {
-      fetch("/user/journal", {
+      fetch("/journal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, entry }),

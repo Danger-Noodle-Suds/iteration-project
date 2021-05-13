@@ -4,6 +4,7 @@ import NavBar from "../components/Navbar";
 import AuthContainer from "./AuthContainer";
 import ContentContainer from "./ContentContainer";
 import HomepageContainer from "../components/HomepageContainer";
+import Journal from "../components/Journal";
 
 function MainContainer() {
   const [firstName, setFirstName] = useState(() => "");
@@ -93,6 +94,26 @@ function MainContainer() {
               moodHistory={moodHistory}
               setMoodHistory={setMoodHistory}
               setJournalHistory={setJournalHistory}
+              isLoggedIn={isLoggedIn}
+            />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/journal" exact>
+            <Journal
+              email={email}
+              firstName={firstName}
+              age={age}
+              contactName={contactName}
+              contactPhone={contactPhone}
+              setContactName={setContactName}
+              setContactPhone={setContactPhone}
+              missedLogin={missedLogin}
+              addiction={addiction}
+              moodHistory={moodHistory}
+              setMoodHistory={setMoodHistory}
+              setJournalHistory={setJournalHistory}
+              journalHistory={journalHistory}
               isLoggedIn={isLoggedIn}
             />
           </Route>
