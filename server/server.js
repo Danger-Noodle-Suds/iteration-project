@@ -65,6 +65,14 @@ app.post(
   }
 );
 
+app.get('/user', userController.verifyUser, (req, res) => {
+  if (res.locals.verified === true) {
+    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  }
+  return res.redirect('/signup');
+});
+
+
 app.get('/journal',
   userController.getUser,
   journalController.getJournals,
@@ -101,6 +109,7 @@ app.post('/user',
       });
   }
 );
+
 
 app.get('*', (req, res) => {
   res.status(404).send('Nothing here');

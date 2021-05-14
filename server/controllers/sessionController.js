@@ -20,6 +20,7 @@ sessionController.verifySession = (req, res, next) => {
       if (returnedJWT.exp < Date.now()) {
           return res.redirect('/');
       }
+      res.locals.verified = true;
       return next(); 
   })
 };

@@ -70,7 +70,7 @@ const Signup = (props) => {
         // .then(() => {
         //   props.history.push('/');
         // })
-        .then(history.push('/'))
+        .then(history.push('/user'))
         .catch(err => console.log('Signup post request to /signup from SignupPage.jsx failed: Error: ', err))
     }
   }
